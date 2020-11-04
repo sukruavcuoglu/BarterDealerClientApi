@@ -1,0 +1,297 @@
+swagger: "2.0"
+info:
+  description: This is the swagger file that goes with our server code
+  version: "1.0.0"
+  title: Swagger Rest Article
+consumes:
+  - application/json
+produces:
+  - application/json
+
+basePath: /api
+
+# Paths supported by the server application
+paths:
+  /auth/login:
+    post:
+      operationId: clientapi.users.login
+      tags:
+        - Authentication
+      summary: Login user
+      description: Login user
+      parameters:
+        - name: user
+          in: body
+          description: User info to login
+          required: True
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                description: asd
+              password:
+                type: string
+                description: asd
+      responses:
+        200:
+          description: Successfully logged in
+          schema:
+            properties:
+              person_id:
+                type: integer
+                description: Id of the person
+              fname:
+                type: string
+                description: First name of the person
+              lname:
+                type: string
+                description: Last name of the person
+              timestamp:
+                type: string
+                description: Creation/Update timestamp of the person record
+
+  /users:
+    get:
+      operationId: clientapi.users.read_all
+      tags:
+        - Users
+      summary: Read the entire set of Users, sorted by last name
+      description: Read the entire set of people, sorted by last name
+      responses:
+        200:
+          description: Successfully read people set operation
+          schema:
+            type: array
+            items:
+              properties:
+                person_id:
+                  type: integer
+                  description: Id of the person
+                fname:
+                  type: string
+                  description: First name of the person
+                lname:
+                  type: string
+                  description: Last name of the person
+                timestamp:
+                  type: string
+                  description: Create/Update timestamp of the person
+                notes:
+                  type: array
+                  items:
+                    properties:
+                      person_id:
+                        type: integer
+                        description: Id of person this note is associated with
+                      note_id:
+                        type: integer
+                        description: Id of this note
+                      content:
+                        type: string
+                        description: content of this note
+                      timestamp:
+                        type: string
+                        description: Create/Update timestamp of this note
+
+    post:
+      operationId: clientapi.users.create
+      tags:
+        - Users
+      summary: Create a user
+      description: Create a new user
+      parameters:
+        - name: user
+          in: body
+          description: User to create
+          required: True
+          schema:
+            type: object
+            properties:
+              user_id:
+                type: string
+                description: user id
+              username:
+                type: string
+                description: username
+              first_name:
+                type: string
+                description: first name
+              last_name:
+                type: string
+                description: last name
+              email:
+                type: string
+                description: email
+              phone:
+                type: string
+                description: phone
+              password:
+                type: string
+                description: password
+      responses:
+        201:
+          description: Successfully created person
+          schema:
+            properties:
+              person_id:
+                type: integer
+                description: Id of the person
+              fname:
+                type: string
+                description: First name of the person
+              lname:
+                type: string
+                description: Last name of the person
+              timestamp:
+                type: string
+                description: Creation/Update timestamp of the person record
+
+  /users/{user_id}:
+    get:
+      operationId: clientapi.users.read_one
+      tags:
+        - Users
+      summary: Read one user
+      description: Read one user
+      parameters:
+        - name: user_id
+          in: path
+          description: Id of the user to get
+          type: string
+          required: True
+      responses:
+        200:
+          description: Successfully read person from people data operation
+          schema:
+            type: object
+            properties:
+              person_id:
+                type: string
+                description: Id of the person
+              fname:
+                type: string
+                description: First name of the person
+              lname:
+                type: string
+                description: Last name of the person
+              timestamp:
+                type: string
+                description: Creation/Update timestamp of the person record
+
+    put:
+      operationId: clientapi.users.update
+      tags:
+        - Users
+      summary: Update a person
+      description: Update a person
+      parameters:
+        - name: user_id
+          in: path
+          description: Id the person to update
+          type: string
+          required: True
+        - name: user
+          in: body
+          schema:
+            type: object
+            properties:
+                user_id:
+                  type: string
+                  description: user id
+                username:
+                  type: string
+                  description: username
+                first_name:
+                  type: string
+                  description: first name
+                last_name:
+                  type: string
+                  description: last name
+                email:
+                  type: string
+                  description: email
+                phone:
+                  type: string
+                  description: phone
+                password_hash:
+                  type: string
+                  description: password
+      responses:
+        200:
+          description: Successfully updated person
+          schema:
+            properties:
+              person_id:
+                type: integer
+                description: Id of the person in the database
+              fname:
+                type: string
+                description: First name of the person
+              lname:
+                type: string
+                description: Last name of the person
+              timestamp:
+                type: string
+                description: Creation/Update timestamp of the person record
+
+    delete:
+      operationId: clientapi.users.delete
+      tags:
+        - Users
+      summary: Delete a person from the people list
+      description: Delete a person
+      parameters:
+        - name: user_id
+          in: path
+          type: string
+          description: Id of the person to delete
+          required: true
+      responses:
+        200:
+          description: Successfully deleted a person
+
+  /categories:
+    get:
+      operationId: clientapi.categories.read_all
+      tags:
+        - Categories
+      summary: Read the entire set of Categories, sorted by last name
+      description: Read the entire set of Categories, sorted by last name
+      responses:
+        200:
+          description: Successfully read Categories set operation
+          schema:
+            type: array
+            items:
+              properties:
+                person_id:
+                  type: integer
+                  description: Id of the person
+                fname:
+                  type: string
+                  description: First name of the person
+                lname:
+                  type: string
+                  description: Last name of the person
+                timestamp:
+                  type: string
+                  description: Create/Update timestamp of the person
+                notes:
+                  type: array
+                  items:
+                    properties:
+                      person_id:
+                        type: integer
+                        description: Id of person this note is associated with
+                      note_id:
+                        type: integer
+                        description: Id of this note
+                      content:
+                        type: string
+                        description: content of this note
+                      timestamp:
+                        type: string
+                        description: Create/Update timestamp of this note
+
+
